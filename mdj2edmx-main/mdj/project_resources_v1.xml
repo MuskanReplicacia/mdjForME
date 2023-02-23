@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
+    <edmx:DataServices>
+        <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="Project_Resources.Model">
+            <EntityType Name="Customer">
+                <Key>
+                    <PropertyRef Name="id"/>
+                </Key>
+                <Property Name="id" Type="Edm.Int32"/>
+                <Property Name="name" Type="Edm.String"/>
+                <Property Name="country" Type="Edm.String"/>
+                <NavigationProperty Name="Projects" Type="Collection(Project_Resources.Model.Project)"/>
+            </EntityType>
+            <EntityType Name="Project">
+                <Key>
+                    <PropertyRef Name="project_id"/>
+                </Key>
+                <Property Name="project_id" Type="Edm.Int32"/>
+                <Property Name="project_name" Type="Edm.String"/>
+                <Property Name="startDate" Type="Edm.Date"/>
+                <Property Name="endDate" Type="Edm.Date"/>
+                <NavigationProperty Name="Resources" Type="Collection(Project_Resources.Model.Resource)"/>
+            </EntityType>
+            <EntityType Name="Resource">
+                <Key>
+                    <PropertyRef Name="id"/>
+                </Key>
+                <Property Name="id" Type="Edm.Int32"/>
+                <Property Name="company_id" Type="Edm.String"/>
+                <Property Name="name" Type="Edm.String"/>
+                <Property Name="role" Type="Edm.String"/>
+                <Property Name="experience" Type="Edm.Int32"/>
+            </EntityType>
+            <EntityContainer Name="Container">
+                <EntitySet Name="Customers" EntityType="Project_Resources.Model.Customer">
+                    <NavigationPropertyBinding Path="Projects" Target="Projects"/>
+                </EntitySet>
+                <EntitySet Name="Projects" EntityType="Project_Resources.Model.Project">
+                    <NavigationPropertyBinding Path="Resources" Target="Resources"/>
+                </EntitySet>
+                <EntitySet Name="Resources" EntityType="Project_Resources.Model.Resource"/>
+            </EntityContainer>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

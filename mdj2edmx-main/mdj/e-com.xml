@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
+    <edmx:DataServices>
+        <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="Untitled.Model">
+            <EntityType Name="RefPaymentMethod">
+                <Key>
+                    <PropertyRef Name="payment_method_description"/>
+                </Key>
+                <Property Name="payment_method_description" Type="Edm.String"/>
+                <NavigationProperty Name="CustomerPaymentMethods" Type="Untitled.Model.CustomerPaymentMethod"/>
+            </EntityType>
+            <EntityType Name="CustomerPaymentMethod">
+                <Key>
+                    <PropertyRef Name="customer_payment_id"/>
+                </Key>
+                <Property Name="customer_payment_id" Type="Edm.Int32"/>
+                <Property Name="credit_card_number" Type="Edm.Int32"/>
+                <Property Name="payment_method_details" Type="Edm.String"/>
+            </EntityType>
+            <EntityType Name="RefOrderStatusCode">
+                <Key>
+                    <PropertyRef Name="order_status_description"/>
+                </Key>
+                <Property Name="order_status_description" Type="Edm.String"/>
+                <NavigationProperty Name="Orders" Type="Untitled.Model.Order"/>
+            </EntityType>
+            <EntityType Name="Invoice">
+                <Key>
+                    <PropertyRef Name="invoice_number"/>
+                </Key>
+                <Property Name="invoice_number" Type="Edm.String"/>
+                <Property Name="order_id" Type="Edm.Int32"/>
+                <Property Name="invoice_status_code" Type="Edm.Int32"/>
+                <Property Name="invoice_date" Type="Edm.Date"/>
+                <Property Name="invoice_details" Type="Edm.String"/>
+                <NavigationProperty Name="Order" Type="Collection(Untitled.Model.Order)" Partner="Orders"/>
+                <NavigationProperty Name="Shipments" Type="Untitled.Model.Shipment"/>
+                <NavigationProperty Name="Orders" Type="Collection(Untitled.Model.Order)" Partner="Invoice"/>
+            </EntityType>
+            <EntityType Name="RefInvoiceStatusCode">
+                <Key>
+                    <PropertyRef Name="invoice_status_description"/>
+                </Key>
+                <Property Name="invoice_status_description" Type="Edm.String"/>
+                <NavigationProperty Name="Invoices" Type="Untitled.Model.Invoice"/>
+            </EntityType>
+            <EntityType Name="Customer">
+                <Key>
+                    <PropertyRef Name="customer_id"/>
+                </Key>
+                <Property Name="customer_id" Type="Edm.Int32"/>
+                <Property Name="organization_or_person" Type="Edm.String"/>
+                <Property Name="organization_name" Type="Edm.String"/>
+                <Property Name="gender" Type="Edm.String"/>
+                <Property Name="first_name" Type="Edm.String"/>
+                <Property Name="middle_initial" Type="Edm.String"/>
+                <Property Name="last_name" Type="Edm.String"/>
+                <Property Name="email_address" Type="Edm.String"/>
+                <Property Name="login_name" Type="Edm.String"/>
+                <Property Name="login_password" Type="Edm.String"/>
+                <Property Name="phone_number" Type="Edm.String"/>
+                <Property Name="address_line_1" Type="Edm.String"/>
+                <Property Name="address_line_2" Type="Edm.String"/>
+                <Property Name="address_line_3" Type="Edm.String"/>
+                <Property Name="address_line_4" Type="Edm.String"/>
+                <Property Name="town_city" Type="Edm.String"/>
+                <Property Name="country" Type="Edm.String"/>
+                <NavigationProperty Name="Orders" Type="Collection(Untitled.Model.Order)"/>
+                <NavigationProperty Name="CustomerPaymentMethods" Type="Collection(Untitled.Model.CustomerPaymentMethod)"/>
+            </EntityType>
+            <EntityType Name="Order">
+                <Key>
+                    <PropertyRef Name="order_id"/>
+                </Key>
+                <Property Name="order_id" Type="Edm.Int32"/>
+                <Property Name="date_order_placed" Type="Edm.Date"/>
+                <Property Name="order_placed" Type="Edm.Int32"/>
+                <NavigationProperty Name="Shipments" Type="Untitled.Model.Shipment"/>
+            </EntityType>
+            <EntityType Name="Shipment">
+                <Key>
+                    <PropertyRef Name="shipment_id"/>
+                </Key>
+                <Property Name="shipment_id" Type="Edm.Int32"/>
+                <Property Name="invoice_number" Type="Edm.String"/>
+                <Property Name="shipment_tracking_number" Type="Edm.String"/>
+                <Property Name="shpiment_date" Type="Edm.Date"/>
+                <Property Name="other_shipment_details" Type="Edm.String"/>
+                <NavigationProperty Name="ShipmentItems" Type="Collection(Untitled.Model.ShipmentItem)"/>
+            </EntityType>
+            <EntityType Name="Payment">
+                <Key>
+                    <PropertyRef Name="payment_id"/>
+                </Key>
+                <Property Name="payment_id" Type="Edm.Int32"/>
+                <Property Name="invoice_number" Type="Edm.String"/>
+                <Property Name="payment_date" Type="Edm.Date"/>
+                <Property Name="payment_amount" Type="Edm.Decimal"/>
+                <NavigationProperty Name="Invoices" Type="Untitled.Model.Invoice"/>
+            </EntityType>
+            <EntityType Name="ShipmentItem">
+                <Key>
+                    <PropertyRef Name="shipment_id"/>
+                </Key>
+                <Property Name="shipment_id" Type="Edm.Int32"/>
+                <Property Name="order_item_id" Type="Edm.Int32"/>
+                <NavigationProperty Name="OrderItems" Type="Untitled.Model.OrderItem"/>
+            </EntityType>
+            <EntityType Name="RefProductType">
+                <Key>
+                    <PropertyRef Name="product_type_description"/>
+                </Key>
+                <Property Name="product_type_description" Type="Edm.String"/>
+                <NavigationProperty Name="Products" Type="Untitled.Model.Product"/>
+            </EntityType>
+            <EntityType Name="Product">
+                <Key>
+                    <PropertyRef Name="product_id"/>
+                </Key>
+                <Property Name="product_id" Type="Edm.Int32"/>
+                <Property Name="product_type_code" Type="Edm.Int32"/>
+                <Property Name="return_merchandise_authorization_nr" Type="Edm.String"/>
+                <Property Name="product_name" Type="Edm.String"/>
+                <Property Name="product_price" Type="Edm.Decimal"/>
+                <Property Name="product_color" Type="Edm.String"/>
+                <Property Name="product_size" Type="Edm.Int32"/>
+                <Property Name="product_description" Type="Edm.String"/>
+                <Property Name="other_product_details" Type="Edm.String"/>
+            </EntityType>
+            <EntityType Name="OrderItem">
+                <Key>
+                    <PropertyRef Name="order_item_id"/>
+                </Key>
+                <Property Name="order_item_id" Type="Edm.Int32"/>
+                <Property Name="order_item_quantity" Type="Edm.Int32"/>
+                <Property Name="order_item_price" Type="Edm.Decimal"/>
+                <Property Name="RMA_number" Type="Edm.Int32"/>
+                <Property Name="RMA_issued_by" Type="Edm.String"/>
+                <Property Name="RMA_issued_date" Type="Edm.Date"/>
+                <Property Name="other_order_item_details" Type="Edm.String"/>
+                <NavigationProperty Name="Products" Type="Untitled.Model.Product"/>
+            </EntityType>
+            <EntityType Name="RefOrderItemStatusCode">
+                <Key>
+                    <PropertyRef Name="order_item_status_description"/>
+                </Key>
+                <Property Name="order_item_status_description" Type="Edm.String"/>
+                <NavigationProperty Name="OrderItem" Type="Untitled.Model.OrderItem"/>
+            </EntityType>
+            <EntityContainer Name="Container">
+                <EntitySet Name="RefPaymentMethods" EntityType="Untitled.Model.RefPaymentMethod">
+                    <NavigationPropertyBinding Path="CustomerPaymentMethod" Target="CustomerPaymentMethods"/>
+                </EntitySet>
+                <EntitySet Name="CustomerPaymentMethods" EntityType="Untitled.Model.CustomerPaymentMethod"/>
+                <EntitySet Name="RefOrderStatusCodes" EntityType="Untitled.Model.RefOrderStatusCode">
+                    <NavigationPropertyBinding Path="Order" Target="Orders"/>
+                </EntitySet>
+                <EntitySet Name="Invoices" EntityType="Untitled.Model.Invoice">
+                    <NavigationPropertyBinding Path="Order" Target="Orders"/>
+                    <NavigationPropertyBinding Path="Shipment" Target="Shipments"/>
+                    <NavigationPropertyBinding Path="Order" Target="Orders"/>
+                </EntitySet>
+                <EntitySet Name="RefInvoiceStatusCodes" EntityType="Untitled.Model.RefInvoiceStatusCode">
+                    <NavigationPropertyBinding Path="Invoice" Target="Invoices"/>
+                </EntitySet>
+                <EntitySet Name="Customers" EntityType="Untitled.Model.Customer">
+                    <NavigationPropertyBinding Path="Order" Target="Orders"/>
+                    <NavigationPropertyBinding Path="CustomerPaymentMethod" Target="CustomerPaymentMethods"/>
+                </EntitySet>
+                <EntitySet Name="Orders" EntityType="Untitled.Model.Order">
+                    <NavigationPropertyBinding Path="Shipment" Target="Shipments"/>
+                </EntitySet>
+                <EntitySet Name="Shipments" EntityType="Untitled.Model.Shipment">
+                    <NavigationPropertyBinding Path="ShipmentItem" Target="ShipmentItems"/>
+                </EntitySet>
+                <EntitySet Name="Payments" EntityType="Untitled.Model.Payment">
+                    <NavigationPropertyBinding Path="Invoice" Target="Invoices"/>
+                </EntitySet>
+                <EntitySet Name="ShipmentItems" EntityType="Untitled.Model.ShipmentItem">
+                    <NavigationPropertyBinding Path="OrderItem" Target="OrderItems"/>
+                </EntitySet>
+                <EntitySet Name="RefProductTypes" EntityType="Untitled.Model.RefProductType">
+                    <NavigationPropertyBinding Path="Product" Target="Products"/>
+                </EntitySet>
+                <EntitySet Name="Products" EntityType="Untitled.Model.Product"/>
+                <EntitySet Name="OrderItems" EntityType="Untitled.Model.OrderItem">
+                    <NavigationPropertyBinding Path="Product" Target="Products"/>
+                </EntitySet>
+                <EntitySet Name="RefOrderItemStatusCodes" EntityType="Untitled.Model.RefOrderItemStatusCode">
+                    <NavigationPropertyBinding Path="OrderItem" Target="OrderItems"/>
+                </EntitySet>
+            </EntityContainer>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

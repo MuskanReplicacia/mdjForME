@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
+    <edmx:DataServices>
+        <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="com.shettybank">
+            <EntityType Name="Customer">
+                <Key>
+                    <PropertyRef Name="customer_id"/>
+                </Key>
+                <Property Name="name" Type="Edm.String"/>
+                <Property Name="customer_id" Type="Edm.Int32"/>
+                <Property Name="address" Type="Edm.String"/>
+                <NavigationProperty Name="Accounts" Type="Collection(com.shettybank.Account)"/>
+            </EntityType>
+            <EntityType Name="Account">
+                <Key>
+                    <PropertyRef Name="account_number"/>
+                </Key>
+                <Property Name="account_number" Type="Edm.Int32"/>
+                <Property Name="balance" Type="Edm.Decimal"/>
+                <Property Name="account_type" Type="Edm.String"/>
+                <NavigationProperty Name="address" Type="com.shettybank.Address"/>
+            </EntityType>
+            <EntityType Name="Address">
+                <Key>
+                    <PropertyRef Name="id"/>
+                </Key>
+                <Property Name="id" Type="Edm.Int32"/>
+                <Property Name="area" Type="Edm.String"/>
+                <Property Name="city" Type="Edm.String"/>
+            </EntityType>
+            <EntityContainer Name="Container">
+                <EntitySet Name="Customers" EntityType="com.shettybank.Customer">
+                    <NavigationPropertyBinding Path="Accounts" Target="Accounts"/>
+                </EntitySet>
+                <EntitySet Name="Accounts" EntityType="com.shettybank.Account">
+                    <NavigationPropertyBinding Path="address" Target="Addresses"/>
+                </EntitySet>
+                <EntitySet Name="Addresses" EntityType="com.shettybank.Address"/>
+            </EntityContainer>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
+    <edmx:DataServices>
+        <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="Model">
+            <EntityType Name="Resource">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Id" Type="Edm.Int32"/>
+                <Property Name="Company_id" Type="Edm.String"/>
+                <Property Name="Name" Type="Edm.String"/>
+                <Property Name="Role" Type="Edm.String"/>
+                <Property Name="Experience" Type="Edm.Int32"/>
+            </EntityType>
+            <EntityType Name="Customer">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Id" Type="Edm.Int32"/>
+                <Property Name="Name" Type="Edm.String"/>
+                <Property Name="Country" Type="Edm.String"/>
+                <NavigationProperty Name="Projects" Type="Collection(Model.Project)"/>
+                <NavigationProperty Name="Accounts" Type="Collection(Model.CustomerAccount)"/>
+            </EntityType>
+            <EntityType Name="CustomerAccount">
+                <Key>
+                    <PropertyRef Name="CaId"/>
+                </Key>
+                <Property Name="CaId" Type="Edm.Int32"/>
+                <Property Name="AccountName" Type="Edm.String"/>
+                <Property Name="AccountCode" Type="Edm.String"/>
+                <NavigationProperty Name="" Type="Model.Resource"/>
+            </EntityType>
+            <EntityType Name="Project">
+                <Key>
+                    <PropertyRef Name="Project_id"/>
+                </Key>
+                <Property Name="Project_id" Type="Edm.Int32"/>
+                <Property Name="Project_name" Type="Edm.String"/>
+                <Property Name="StartDate" Type="Edm.Date"/>
+                <Property Name="EndDate" Type="Edm.Date"/>
+                <NavigationProperty Name="ProjectResources" Type="Collection(Model.Resource)"/>
+            </EntityType>
+            <EntityContainer Name="Container">
+                <EntitySet Name="Resources" EntityType="Model.Resource"/>
+                <EntitySet Name="Customers" EntityType="Model.Customer">
+                    <NavigationPropertyBinding Path="Projects" Target="Projects"/>
+                    <NavigationPropertyBinding Path="Accounts" Target="CustomerAccounts"/>
+                </EntitySet>
+                <EntitySet Name="CustomerAccounts" EntityType="Model.CustomerAccount">
+                    <NavigationPropertyBinding Path="" Target="Resources"/>
+                </EntitySet>
+                <EntitySet Name="Projects" EntityType="Model.Project">
+                    <NavigationPropertyBinding Path="ProjectResources" Target="Resources"/>
+                </EntitySet>
+            </EntityContainer>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

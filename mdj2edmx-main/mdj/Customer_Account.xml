@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
+    <edmx:DataServices>
+        <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="Model">
+            <EntityType Name="!Customer name">
+                <Property Name="Name" Type="Edm.String"/>
+                <Property Name="Customer_id" Type="Edm.Int32"/>
+                <Property Name="Address" Type="Edm.String"/>
+                <NavigationProperty Name="" Type="Model.!Customer name"/>
+            </EntityType>
+            <EntityType Name="Account">
+                <Key>
+                    <PropertyRef Name="Account_number"/>
+                </Key>
+                <Property Name="Account_number" Type="Edm.Int32"/>
+                <Property Name="" Type="Edm.Decimal"/>
+                <Property Name="Account_type" Type="Edm.String"/>
+                <Property Name="Imps_enabled"/>
+            </EntityType>
+            <EntityContainer Name="Container">
+                <EntitySet Name="!Customer names" EntityType="Model.!Customer name">
+                    <NavigationPropertyBinding Path="" Target="!Customer names"/>
+                </EntitySet>
+                <EntitySet Name="Accounts" EntityType="Model.Account"/>
+            </EntityContainer>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

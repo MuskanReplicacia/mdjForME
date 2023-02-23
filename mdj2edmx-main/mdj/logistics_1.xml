@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
+    <edmx:DataServices>
+        <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="Untitled.Model">
+            <EntityType Name="Customer">
+                <Key>
+                    <PropertyRef Name="id"/>
+                </Key>
+                <Property Name="id" Type="Edm.Int32"/>
+                <Property Name="customerDetails" Type="Edm.String"/>
+            </EntityType>
+            <EntityType Name="Product">
+                <Key>
+                    <PropertyRef Name="id"/>
+                </Key>
+                <Property Name="id" Type="Edm.Int32"/>
+                <Property Name="productDetails" Type="Edm.String"/>
+                <Property Name="quantity" Type="Edm.Int32"/>
+                <Property Name="productsInShipmentId" Type="Edm.Int32"/>
+            </EntityType>
+            <EntityType Name="Shipment">
+                <Key>
+                    <PropertyRef Name="id"/>
+                </Key>
+                <Property Name="id" Type="Edm.Int32"/>
+                <Property Name="customerId" Type="Edm.Int32"/>
+                <Property Name="locationId" Type="Edm.Int32"/>
+                <Property Name="date" Type="Edm.Date"/>
+                <Property Name="otherDetails" Type="Edm.String"/>
+                <NavigationProperty Name="Locations" Type="Untitled.Model.Location"/>
+                <NavigationProperty Name="Customers" Type="Untitled.Model.Customer"/>
+                <NavigationProperty Name="Products" Type="Collection(Untitled.Model.Product)"/>
+            </EntityType>
+            <EntityType Name="Location">
+                <Key>
+                    <PropertyRef Name="id"/>
+                </Key>
+                <Property Name="id" Type="Edm.Int32"/>
+                <Property Name="locationDetails" Type="Edm.String"/>
+            </EntityType>
+            <EntityType Name="Document">
+                <Key>
+                    <PropertyRef Name="shipmentId"/>
+                </Key>
+                <Property Name="shipmentId" Type="Edm.Int32"/>
+                <Property Name="documentTypeCode" Type="Edm.Int32"/>
+                <Property Name="dateIssued" Type="Edm.Date"/>
+                <Property Name="otherDetails" Type="Edm.String"/>
+                <Property Name="documentTypeDescription" Type="Edm.String"/>
+            </EntityType>
+            <EntityContainer Name="Container">
+                <EntitySet Name="Customers" EntityType="Untitled.Model.Customer"/>
+                <EntitySet Name="Products" EntityType="Untitled.Model.Product"/>
+                <EntitySet Name="Shipments" EntityType="Untitled.Model.Shipment">
+                    <NavigationPropertyBinding Path="Location" Target="Locations"/>
+                    <NavigationPropertyBinding Path="Customer" Target="Customers"/>
+                    <NavigationPropertyBinding Path="Product" Target="Products"/>
+                </EntitySet>
+                <EntitySet Name="Locations" EntityType="Untitled.Model.Location"/>
+                <EntitySet Name="Documents" EntityType="Untitled.Model.Document"/>
+            </EntityContainer>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

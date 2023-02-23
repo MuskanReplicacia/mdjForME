@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
+    <edmx:DataServices>
+        <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="Untitled.Model">
+            <EntityType Name="Students">
+                <Key>
+                    <PropertyRef Name="id"/>
+                </Key>
+                <Property Name="id" Type="Edm.Int32"/>
+                <Property Name="gender" Type="Edm.String"/>
+                <Property Name="dateOfBirth" Type="Edm.Date"/>
+                <Property Name="fullName" Type="Edm.String"/>
+                <NavigationProperty Name="CoursesScheduleds" Type="Collection(Untitled.Model.CoursesScheduled)"/>
+                <NavigationProperty Name="Assignmentses" Type="Collection(Untitled.Model.Assignments)"/>
+            </EntityType>
+            <EntityType Name="Staff">
+                <Key>
+                    <PropertyRef Name="id"/>
+                </Key>
+                <Property Name="id" Type="Edm.Int32"/>
+                <Property Name="gender" Type="Edm.String"/>
+                <Property Name="dateOfBirth" Type="Edm.Date"/>
+                <Property Name="fullName" Type="Edm.String"/>
+                <Property Name="jobTitle" Type="Edm.String"/>
+                <Property Name="phoneNumber" Type="Edm.String"/>
+                <Property Name="emailAddress" Type="Edm.String"/>
+            </EntityType>
+            <EntityType Name="CoursesScheduled">
+                <Key>
+                    <PropertyRef Name="id"/>
+                </Key>
+                <Property Name="id" Type="Edm.Int32"/>
+                <Property Name="courseOfferingId" Type="Edm.Int32"/>
+                <Property Name="givenByStaffId" Type="Edm.Int32"/>
+                <Property Name="semesterId" Type="Edm.Int32"/>
+                <Property Name="otherCourseScheduleDetails" Type="Edm.String"/>
+                <Property Name="courseName" Type="Edm.String"/>
+                <NavigationProperty Name="Assignmentses" Type="Collection(Untitled.Model.Assignments)"/>
+            </EntityType>
+            <EntityType Name="Assignments">
+                <Key>
+                    <PropertyRef Name="studentId"/>
+                </Key>
+                <Property Name="studentId" Type="Edm.Int32"/>
+                <Property Name="courseId" Type="Edm.Int32"/>
+                <Property Name="assignmentStartAndEndDate" Type="Edm.Date"/>
+                <Property Name="assignmentCompletedDate" Type="Edm.Date"/>
+                <Property Name="commentsOnAssignments" Type="Edm.String"/>
+                <Property Name="assignmentStatusCode" Type="Edm.Int32"/>
+            </EntityType>
+            <EntityType Name="Semesters">
+                <Key>
+                    <PropertyRef Name="id"/>
+                </Key>
+                <Property Name="id" Type="Edm.Int32"/>
+                <Property Name="semesterStartDate" Type="Edm.Date"/>
+                <Property Name="semesterEndDate" Type="Edm.Date"/>
+                <Property Name="semesterName" Type="Edm.String"/>
+            </EntityType>
+            <EntityContainer Name="Container">
+                <EntitySet Name="Studentses" EntityType="Untitled.Model.Students">
+                    <NavigationPropertyBinding Path="CoursesScheduled" Target="CoursesScheduleds"/>
+                    <NavigationPropertyBinding Path="Assignmentse" Target="Assignmentses"/>
+                </EntitySet>
+                <EntitySet Name="Staffs" EntityType="Untitled.Model.Staff"/>
+                <EntitySet Name="CoursesScheduleds" EntityType="Untitled.Model.CoursesScheduled">
+                    <NavigationPropertyBinding Path="Assignmentse" Target="Assignmentses"/>
+                </EntitySet>
+                <EntitySet Name="Assignmentses" EntityType="Untitled.Model.Assignments"/>
+                <EntitySet Name="Semesterses" EntityType="Untitled.Model.Semesters"/>
+            </EntityContainer>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

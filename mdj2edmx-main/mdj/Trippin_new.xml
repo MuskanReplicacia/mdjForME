@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
+    <edmx:DataServices>
+        <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="Trippin">
+            <EntityType Name="PlanItem">
+                <Key>
+                    <PropertyRef Name="PlanItemId"/>
+                </Key>
+                <Property Name="PlanItemId" Type="Edm.Int32"/>
+                <Property Name="ConfirmationCode" Type="Edm.String"/>
+                <Property Name="StartsAt" Type="Edm.DateTimeOffset"/>
+                <Property Name="EndsAt" Type="Edm.DateTimeOffset"/>
+                <Property Name="Duration" Type="Edm.Duration"/>
+                <NavigationProperty Name="" Type="Trippin.Event"/>
+            </EntityType>
+            <EntityType Name="Event" BaseType="Trippin.PlanItem">
+                <Property Name="OccursAt" Type="Trippin.EventLocation"/>
+                <Property Name="Description" Type="Edm.String"/>
+                <NavigationProperty Name="" Type="Trippin.Event"/>
+            </EntityType>
+            <EntityType Name="PublicTransportation" BaseType="Trippin.PlanItem">
+                <Property Name="SeatNumber" Type="Edm.String"/>
+                <NavigationProperty Name="Airline" Type="Trippin.AirLine"/>
+                <NavigationProperty Name="" Type="Trippin.Event"/>
+            </EntityType>
+            <EntityType Name="Employee" BaseType="Trippin.Person">
+                <Property Name="Cost" Type="Edm.Int32"/>
+                <NavigationProperty Name="Peers" Type="Collection(Trippin.Person)"/>
+                <NavigationProperty Name="Peers" Type="Collection(Trippin.Person)"/>
+                <NavigationProperty Name="Trips" Type="Collection(Trippin.Trip)"/>
+                <NavigationProperty Name="Friends" Type="Collection(Trippin.Person)"/>
+                <NavigationProperty Name="BestFriend" Type="Trippin.Person"/>
+            </EntityType>
+            <EntityType Name="Trip">
+                <Key>
+                    <PropertyRef Name="TripId"/>
+                </Key>
+                <Property Name="TripId" Type="Edm.Int32"/>
+                <Property Name="ShareId"/>
+                <Property Name="Name" Type="Edm.String"/>
+                <Property Name="Budget" Type="Edm.Single"/>
+                <Property Name="Description" Type="Edm.String"/>
+                <Property Name="Tags" Type="Collection(Edm.String)"/>
+                <Property Name="StartsAt" Type="Edm.DateTimeOffset"/>
+                <Property Name="EndsAt" Type="Edm.DateTimeOffset"/>
+                <Property Name="StartTime" Type="Edm.TimeOfDay"/>
+                <Property Name="EndTime" Type="Edm.TimeOfDay"/>
+                <NavigationProperty Name="Travellers" Type="Collection(Trippin.Person)"/>
+                <NavigationProperty Name="PlanItems" Type="Collection(Trippin.PlanItem)"/>
+            </EntityType>
+            <EntityType Name="AirLine">
+                <Key>
+                    <PropertyRef Name="AirlineCode"/>
+                </Key>
+                <Property Name="AirlineCode" Type="Edm.String"/>
+                <Property Name="Name" Type="Edm.String"/>
+                <NavigationProperty Name="Airline" Type="Trippin.PublicTransportation"/>
+            </EntityType>
+            <EntityType Name="Airport">
+                <Key>
+                    <PropertyRef Name="IcaoCode"/>
+                </Key>
+                <Property Name="Name" Type="Edm.String"/>
+                <Property Name="IcaoCode" Type="Edm.String"/>
+                <Property Name="IataCode" Type="Edm.String"/>
+                <Property Name="Location" Type="Trippin.AirportLocation"/>
+                <Property Name="Latitude" Type="Edm.Decimal"/>
+                <Property Name="Longtide" Type="Edm.Decimal"/>
+                <Property Name="IsInsideCity" Type="Edm.Boolean"/>
+            </EntityType>
+            <EntityType Name="Manager" BaseType="Trippin.Person">
+                <Property Name="Budget" Type="Edm.Int32"/>
+                <Property Name="BossOffice" Type="Trippin.Location"/>
+                <NavigationProperty Name="DirectReports" Type="Collection(Trippin.Person)"/>
+                <NavigationProperty Name="DirectReports" Type="Collection(Trippin.Person)"/>
+                <NavigationProperty Name="Trips" Type="Collection(Trippin.Trip)"/>
+                <NavigationProperty Name="Friends" Type="Collection(Trippin.Person)"/>
+                <NavigationProperty Name="BestFriend" Type="Trippin.Person"/>
+            </EntityType>
+            <EntityType Name="Flight" BaseType="Trippin.PublicTransportation">
+                <Property Name="FlightNumber" Type="Edm.String"/>
+                <NavigationProperty Name="Airline" Type="Trippin.AirLine"/>
+                <NavigationProperty Name="From" Type="Trippin.Airport"/>
+                <NavigationProperty Name="To" Type="Trippin.Airport"/>
+                <NavigationProperty Name="Airline" Type="Trippin.AirLine"/>
+                <NavigationProperty Name="" Type="Trippin.Event"/>
+            </EntityType>
+            <EntityType Name="Person">
+                <Key>
+                    <PropertyRef Name="UserName"/>
+                </Key>
+                <Property Name="UserName" Type="Edm.String"/>
+                <Property Name="FirstName" Type="Edm.String"/>
+                <Property Name="LastName" Type="Edm.String"/>
+                <Property Name="Income" Type="Edm.Decimal"/>
+                <Property Name="DateOfBirth" Type="Edm.Date"/>
+                <Property Name="Photo" Type="Edm.Binary"/>
+                <Property Name="MiddleName" Type="Edm.String"/>
+                <Property Name="Gender" Type="Trippin.PersonGender"/>
+                <Property Name="Age" Type="Edm.Int32"/>
+                <Property Name="Emails" Type="Collection(Edm.String)"/>
+                <Property Name="AddressInfo" Type="Collection(Trippin.Location)"/>
+                <Property Name="HomeAddress" Type="Trippin.Location"/>
+                <Property Name="FavoriteFeature" Type="Trippin.Feature"/>
+                <Property Name="Features" Type="Collection(Trippin.Feature)"/>
+                <NavigationProperty Name="Trips" Type="Collection(Trippin.Trip)"/>
+                <NavigationProperty Name="Friends" Type="Collection(Trippin.Person)"/>
+                <NavigationProperty Name="BestFriend" Type="Trippin.Person"/>
+            </EntityType>
+            <EntityType Name="TripTags">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Id" Type="Edm.Int32"/>
+                <Property Name="TripId" Type="Edm.Int32"/>
+                <Property Name="Tags" Type="Edm.String"/>
+            </EntityType>
+            <EntityType Name="PersonEmails">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Id" Type="Edm.Int32"/>
+                <Property Name="UserName" Type="Edm.String"/>
+                <Property Name="Emails" Type="Edm.String"/>
+            </EntityType>
+            <EntityType Name="PersonAddressInfo">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Id" Type="Edm.Int32"/>
+                <Property Name="UserName" Type="Edm.String"/>
+                <Property Name="Address" Type="Edm.String"/>
+                <Property Name="City" Type="Trippin.City"/>
+            </EntityType>
+            <EntityType Name="PersonFeature">
+                <Key>
+                    <PropertyRef Name="Id"/>
+                </Key>
+                <Property Name="Id" Type="Edm.Int32"/>
+                <Property Name="UserName" Type="Edm.String"/>
+                <Property Name="Feature" Type="Trippin.Feature"/>
+            </EntityType>
+            <EntityContainer Name="Container">
+                <EntitySet Name="PlanItems" EntityType="Trippin.PlanItem">
+                    <NavigationPropertyBinding Path="" Target="Events"/>
+                </EntitySet>
+                <EntitySet Name="Events" EntityType="Trippin.Event">
+                    <NavigationPropertyBinding Path="" Target="Events"/>
+                </EntitySet>
+                <EntitySet Name="PublicTransportations" EntityType="Trippin.PublicTransportation">
+                    <NavigationPropertyBinding Path="Airline" Target="AirLines"/>
+                    <NavigationPropertyBinding Path="" Target="Events"/>
+                </EntitySet>
+                <EntitySet Name="Employees" EntityType="Trippin.Employee">
+                    <NavigationPropertyBinding Path="Peers" Target="Persons"/>
+                    <NavigationPropertyBinding Path="Peers" Target="Persons"/>
+                    <NavigationPropertyBinding Path="Trips" Target="Trips"/>
+                    <NavigationPropertyBinding Path="Friends" Target="Persons"/>
+                    <NavigationPropertyBinding Path="BestFriend" Target="Persons"/>
+                </EntitySet>
+                <EntitySet Name="Trips" EntityType="Trippin.Trip">
+                    <NavigationPropertyBinding Path="Travellers" Target="Persons"/>
+                    <NavigationPropertyBinding Path="PlanItems" Target="PlanItems"/>
+                </EntitySet>
+                <EntitySet Name="AirLines" EntityType="Trippin.AirLine">
+                    <NavigationPropertyBinding Path="Airline" Target="PublicTransportations"/>
+                </EntitySet>
+                <EntitySet Name="Airports" EntityType="Trippin.Airport"/>
+                <EntitySet Name="Managers" EntityType="Trippin.Manager">
+                    <NavigationPropertyBinding Path="DirectReports" Target="Persons"/>
+                    <NavigationPropertyBinding Path="DirectReports" Target="Persons"/>
+                    <NavigationPropertyBinding Path="Trips" Target="Trips"/>
+                    <NavigationPropertyBinding Path="Friends" Target="Persons"/>
+                    <NavigationPropertyBinding Path="BestFriend" Target="Persons"/>
+                </EntitySet>
+                <EntitySet Name="Flights" EntityType="Trippin.Flight">
+                    <NavigationPropertyBinding Path="Airline" Target="AirLines"/>
+                    <NavigationPropertyBinding Path="From" Target="Airports"/>
+                    <NavigationPropertyBinding Path="To" Target="Airports"/>
+                    <NavigationPropertyBinding Path="Airline" Target="AirLines"/>
+                    <NavigationPropertyBinding Path="" Target="Events"/>
+                </EntitySet>
+                <EntitySet Name="Persons" EntityType="Trippin.Person">
+                    <NavigationPropertyBinding Path="Trips" Target="Trips"/>
+                    <NavigationPropertyBinding Path="Friends" Target="Persons"/>
+                    <NavigationPropertyBinding Path="BestFriend" Target="Persons"/>
+                </EntitySet>
+                <EntitySet Name="TripTagss" EntityType="Trippin.TripTags"/>
+                <EntitySet Name="PersonEmailss" EntityType="Trippin.PersonEmails"/>
+                <EntitySet Name="PersonAddressInfos" EntityType="Trippin.PersonAddressInfo"/>
+                <EntitySet Name="PersonFeatures" EntityType="Trippin.PersonFeature"/>
+            </EntityContainer>
+            <ComplexType Name="EventLocation" BaseType="Trippin.Location">
+                <Property Name="BuildingInfo" Type="Edm.String"/>
+            </ComplexType>
+            <ComplexType Name="City">
+                <Property Name="Name" Type="Edm.String"/>
+                <Property Name="CountryRegion" Type="Edm.String"/>
+                <Property Name="Region" Type="Edm.String"/>
+            </ComplexType>
+            <ComplexType Name="AirportLocation" BaseType="Trippin.Location">
+                <Property Name="Loc"/>
+            </ComplexType>
+            <ComplexType Name="Location">
+                <Property Name="Address" Type="Edm.String"/>
+                <Property Name="City" Type="Trippin.City"/>
+            </ComplexType>
+            <EnumType Name="Feature">
+                <Member Name="feature1" Value="0"/>
+                <Member Name="feature2" Value="1"/>
+                <Member Name="feature3" Value="2"/>
+                <Member Name="feature4" Value="3"/>
+            </EnumType>
+            <EnumType Name="PersonGender">
+                <Member Name="male" Value="0"/>
+                <Member Name="female" Value="1"/>
+                <Member Name="unknown" Value="2"/>
+            </EnumType>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<edmx:Edmx xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx" Version="4.0">
+    <edmx:DataServices>
+        <Schema xmlns="http://docs.oasis-open.org/odata/ns/edm" Namespace="Untitled.Model">
+            <EntityType Name="CustomerPayee">
+                <Key>
+                    <PropertyRef Name="customer_id"/>
+                </Key>
+                <Property Name="customer_id" Type="Edm.Int32"/>
+                <Property Name="customerName" Type="Edm.String"/>
+                <Property Name="otherDetails" Type="Edm.String"/>
+            </EntityType>
+            <EntityType Name="Account">
+                <Key>
+                    <PropertyRef Name="account_id"/>
+                </Key>
+                <Property Name="account_id" Type="Edm.Int32"/>
+                <Property Name="accountName" Type="Edm.String"/>
+                <Property Name="currentBalance" Type="Edm.Decimal"/>
+            </EntityType>
+            <EntityType Name="Payer">
+                <Key>
+                    <PropertyRef Name="payer_id"/>
+                </Key>
+                <Property Name="payer_id" Type="Edm.Int32"/>
+                <Property Name="payerName" Type="Edm.String"/>
+                <Property Name="otherDetails" Type="Edm.String"/>
+            </EntityType>
+            <EntityType Name="Payment">
+                <Key>
+                    <PropertyRef Name="payment_id"/>
+                </Key>
+                <Property Name="payment_id" Type="Edm.Int32"/>
+                <Property Name="dateofPayment" Type="Edm.Date"/>
+                <Property Name="amountofPayment" Type="Edm.Decimal"/>
+                <Property Name="otherDetails" Type="Edm.String"/>
+                <NavigationProperty Name="Accounts" Type="Untitled.Model.Account"/>
+                <NavigationProperty Name="RefPaymentMethods" Type="Untitled.Model.RefPaymentMethod"/>
+                <NavigationProperty Name="RefPaymentStatuses" Type="Collection(Untitled.Model.RefPaymentStatus)"/>
+            </EntityType>
+            <EntityType Name="RefPaymentMethod">
+                <Key>
+                    <PropertyRef Name="paymentMethodCode"/>
+                </Key>
+                <Property Name="paymentMethodCode" Type="Edm.Int32"/>
+                <Property Name="paymentMethodName" Type="Edm.String"/>
+            </EntityType>
+            <EntityType Name="RefPaymentStatus">
+                <Key>
+                    <PropertyRef Name="paymentStatusCode"/>
+                </Key>
+                <Property Name="paymentStatusCode" Type="Edm.Int32"/>
+            </EntityType>
+            <EntityType Name="PaymentStatus">
+                <Key>
+                    <PropertyRef Name="paymentStatusId"/>
+                </Key>
+                <Property Name="paymentStatusId" Type="Edm.Int32"/>
+                <Property Name="paymentStatusDescription" Type="Edm.String"/>
+            </EntityType>
+            <EntityContainer Name="Container">
+                <EntitySet Name="CustomerPayees" EntityType="Untitled.Model.CustomerPayee"/>
+                <EntitySet Name="Accounts" EntityType="Untitled.Model.Account"/>
+                <EntitySet Name="Payers" EntityType="Untitled.Model.Payer"/>
+                <EntitySet Name="Payments" EntityType="Untitled.Model.Payment">
+                    <NavigationPropertyBinding Path="Account" Target="Accounts"/>
+                    <NavigationPropertyBinding Path="RefPaymentMethod" Target="RefPaymentMethods"/>
+                    <NavigationPropertyBinding Path="RefPaymentStatuse" Target="RefPaymentStatuses"/>
+                </EntitySet>
+                <EntitySet Name="RefPaymentMethods" EntityType="Untitled.Model.RefPaymentMethod"/>
+                <EntitySet Name="RefPaymentStatuses" EntityType="Untitled.Model.RefPaymentStatus"/>
+                <EntitySet Name="PaymentStatuses" EntityType="Untitled.Model.PaymentStatus"/>
+            </EntityContainer>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>
